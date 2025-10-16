@@ -124,7 +124,6 @@ function editUser(id) {
         })
 }
 
-
 function updateUser() {
     let id = document.getElementById('editId').value;
     let name = document.getElementById('editName').value;

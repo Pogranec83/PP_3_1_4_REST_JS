@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.model.UserDto;
 import ru.kata.spring.boot_security.demo.service.UsersService;
 import java.util.List;
 
@@ -21,8 +21,8 @@ public class RestControllerUser {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<User>> listUsers() {
-        final List<User> clients = usersService.getAllUsers();
+    public ResponseEntity<List<UserDto>> listUsers() {
+        final List<UserDto> clients = usersService.getAllUsers();
 
         return clients != null &&  !clients.isEmpty()
                 ? new ResponseEntity<>(clients, HttpStatus.OK)

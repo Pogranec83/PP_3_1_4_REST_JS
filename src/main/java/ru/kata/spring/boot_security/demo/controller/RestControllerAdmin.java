@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.model.UserDto;
 import ru.kata.spring.boot_security.demo.service.UsersService;
 
 import java.security.Principal;
@@ -21,8 +21,8 @@ public class RestControllerAdmin {
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<List<User>> listUsers() {
-        final List<User> clients = usersService.getAllUsers();
+    public ResponseEntity<List<UserDto>> listUsers() {
+        final List<UserDto> clients = usersService.getAllUsers();
 
         return clients != null &&  !clients.isEmpty()
                 ? new ResponseEntity<>(clients, HttpStatus.OK)
@@ -30,30 +30,30 @@ public class RestControllerAdmin {
     }
 
     @GetMapping("/admin/email")
-    public ResponseEntity<User> getUserEmail(Principal principal){
-        User user = usersService.getUserEmail(principal.getName());
+    public ResponseEntity<UserDto> getUserEmail(Principal principal){
+        UserDto user = usersService.getUserEmail(principal.getName());
         return user != null
                 ? new ResponseEntity<>(user, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/admin/{id}")
-    public ResponseEntity<User> getUser(@PathVariable(name = "id") long id) {
-        final User user = usersService.getUserById(id);
+    public ResponseEntity<UserDto> getUser(@PathVariable(name = "id") long id) {
+        final UserDto user = usersService.getUserById(id);
         return user != null
                 ? new ResponseEntity<>(user, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/admin")
-    public ResponseEntity<?> newUser(@RequestBody User user) {
+    public ResponseEntity<?> newUser(@RequestBody UserDto user) {
         usersService.saveNewUser(user, user.getRoles());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/admin")
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
-        final User person = usersService.updateUser(user, user.getRoles());
+    public ResponseEntity<?> updateUser(@RequestBody UserDto user) {
+        final UserDto person = usersService.updateUser(user, user.getRoles());
 
         return person != null
                 ? new ResponseEntity<>(HttpStatus.OK)

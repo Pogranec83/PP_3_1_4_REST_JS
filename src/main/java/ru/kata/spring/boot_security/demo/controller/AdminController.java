@@ -4,7 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.model.UserDto;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UsersService;
 
@@ -26,7 +26,7 @@ public class AdminController {
     @GetMapping()
     public String showAllUsers( Model model,
                                Principal principal,
-                               @AuthenticationPrincipal User user) {
+                               @AuthenticationPrincipal UserDto user) {
 
         model.addAttribute("roleList", roleService.getAllRole());
         model.addAttribute("users", usersService.getAllUsers());
@@ -35,11 +35,11 @@ public class AdminController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("user") User user,
+    public String create(@ModelAttribute("user") UserDto user,
                          @RequestParam("listRoles") ArrayList<Long> roles) {
 
         String email = user.getEmail();
-        for(User person : usersService.getAllUsers()){
+        for(UserDto person : usersService.getAllUsers()){
             if(person.getEmail().equals(email)){
                 return "isUser";
             }
@@ -50,7 +50,7 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user,
+    public String update(@ModelAttribute("user") UserDto user,
                          @RequestParam("listRoles") ArrayList<Long> roles) {
 
         usersService.updateUser(user, roleService.findRoles(roles));

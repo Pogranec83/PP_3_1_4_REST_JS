@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,7 @@ import java.util.*;
 @Entity
 @AllArgsConstructor
 @Table(name = "users")
-public class User implements UserDetails {
+public class UserDto implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,14 +43,14 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    public User() {
+    public UserDto() {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<RoleDto> roles;
 
 
     @Override

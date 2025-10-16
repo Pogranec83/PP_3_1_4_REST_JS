@@ -17,4 +17,5 @@ public class LoginController {
         model.addAttribute("logout", logout != null);
         return "login";
     }
+
 }

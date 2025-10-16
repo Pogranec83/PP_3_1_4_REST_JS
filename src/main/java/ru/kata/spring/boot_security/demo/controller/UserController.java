@@ -23,5 +23,6 @@ public class UserController {
         model.addAttribute("person", usersService.getUserEmail(principal.getName()));
         return "user";
     }
+
 }
 
